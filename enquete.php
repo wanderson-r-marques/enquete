@@ -17,94 +17,87 @@
  }
  }
  if (controle <= 0){
- alert("Selecione uma das opções!");
+ alert("Selecione uma das opï¿½ï¿½es!");
  return false;
  }
  }
-</script> 
+</script>
 
 
 <?php
 
 /*
-
-  =====================================================================
-    Script desenvolvido por Alan Pardini Sant'Ana - www.alanps.com.br
-  =====================================================================
-
-*/
+ * Wanderson Rodrigues Marques
+ * Web Developer
+ * https://github.com/wanderson-r-marques
+ */
 
 include "db.ini";
 include "db_connect.php";
 
-$R1=$_POST['R1'];
-$resultado=$_GET['resultado'];
-
-if (!isset($_COOKIE['cookies']))
-{
-echo "<form name=\"enquete\" method=\"POST\" action=\"enquete.php\" onSubmit=\"return validaForm();\">";
-echo "$pergunta <br><br>";
-echo "<input type=\"radio\" value=\"1\" name=\"R1\">"; 
-echo " $opcao1 <br>";
-echo "<input type=\"radio\" value=\"2\" name=\"R1\">";
-echo " $opcao2 <br>";
-echo "<input type=\"radio\" value=\"3\" name=\"R1\">";
-echo " $opcao3 <br>";
-echo "<input type=\"radio\" value=\"4\" name=\"R1\">";
-echo " $opcao4 <br>";
-echo "<br><input type=\"submit\" value=\"Enviar\" name=\"Enviar\">";
-echo "</form>";
-
-if ($R1 == 1)
-{
-$query = mysql_query("SELECT * FROM `$bd` WHERE `Opção` LIKE '$opcao1'") or die(mysql_error());
-while ($row = mysql_fetch_array($query)) {
-$voto=$row[Votos];
-}
-$query = mysql_query("UPDATE `$bd` SET `Votos` = '$voto' + 1 WHERE `Opção` LIKE '$opcao1'") or die(mysql_error());
-setcookie('cookies',$_SERVER['REMOTE_ADDR'],time()+86400);
-echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0\">";
+$R1 = null;
+if (isset($_POST['Enviar'])) {
+    $R1 = $_POST['R1'];
+    $resultado = $_GET['resultado'];
 }
 
-if ($R1 == 2)
-{
-$query = mysql_query("SELECT * FROM `$bd` WHERE `Opção` LIKE '$opcao2'") or die(mysql_error());
-while ($row = mysql_fetch_array($query)) {
-$voto=$row[Votos];
-}
-$query = mysql_query("UPDATE `$bd` SET `Votos` = '$voto' + 1 WHERE `Opção` LIKE '$opcao2'") or die(mysql_error());
-setcookie('cookies',$_SERVER['REMOTE_ADDR'],time()+86400);
-echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0\">";
-}
+if (!isset($_COOKIE['cookies'])) {
+    echo "<form name=\"enquete\" method=\"POST\" action=\"enquete.php\" onSubmit=\"return validaForm();\">";
+    echo utf8_encode("$pergunta <br><br>");
+    echo "<input type=\"radio\" value=\"1\" name=\"R1\">";
+    echo utf8_encode(" $opcao1 <br>");
+    echo "<input type=\"radio\" value=\"2\" name=\"R1\">";
+    echo utf8_encode(" $opcao2 <br>");
+    echo "<input type=\"radio\" value=\"3\" name=\"R1\">";
+    echo utf8_encode(" $opcao3 <br>");
+    echo "<input type=\"radio\" value=\"4\" name=\"R1\">";
+    echo utf8_encode(" $opcao4 <br>");
+    echo "<br><input type=\"submit\" value=\"Enviar\" name=\"Enviar\">";
+    echo "</form>";
 
-if ($R1 == 3)
-{
-$query = mysql_query("SELECT * FROM `$bd` WHERE `Opção` LIKE '$opcao3'") or die(mysql_error());
-while ($row = mysql_fetch_array($query)) {
-$voto=$row[Votos];
-}
-$query = mysql_query("UPDATE `$bd` SET `Votos` = '$voto' + 1 WHERE `Opção` LIKE '$opcao3'") or die(mysql_error());
-setcookie('cookies',$_SERVER['REMOTE_ADDR'],time()+86400);
-echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0\">";
-}
+    if ($R1 == 1) {
+        $query = mysqli_query($db,"SELECT * FROM `$bd` WHERE `Opcao` LIKE '$opcao1'");
+        while ($row = mysqli_fetch_array($query)) {
+            $voto = $row['Votos'];
+        }
+        $query = mysqli_query($db,"UPDATE `$bd` SET `Votos` = '$voto' + 1 WHERE `Opcao` LIKE '$opcao1'");
+        setcookie('cookies', $_SERVER['REMOTE_ADDR'], time() + 86400);
+        echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0\">";
+    }
 
-if ($R1 == 4)
-{
-$query = mysql_query("SELECT * FROM `$bd` WHERE `Opção` LIKE '$opcao4'") or die(mysql_error());
-while ($row = mysql_fetch_array($query)) {
-$voto=$row[Votos];
-}
-$query = mysql_query("UPDATE `$bd` SET `Votos` = '$voto' + 1 WHERE `Opção` LIKE '$opcao4'") or die(mysql_error());
-setcookie('cookies',$_SERVER['REMOTE_ADDR'],time()+86400);
-echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0\">";
-}
+    if ($R1 == 2) {
+        $query = mysqli_query($db,"SELECT * FROM `$bd` WHERE `Opcao` LIKE '$opcao2'");
+        while ($row = mysqli_fetch_array($query)) {
+            $voto = $row['Votos'];
+        }
+        $query = mysqli_query($db,"UPDATE `$bd` SET `Votos` = '$voto' + 1 WHERE `Opcao` LIKE '$opcao2'");
+        setcookie('cookies', $_SERVER['REMOTE_ADDR'], time() + 86400);
+        echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0\">";
+    }
 
-}
+    if ($R1 == 3) {
+        $query = mysqli_query($db,"SELECT * FROM `$bd` WHERE `Opcao` LIKE '$opcao3'");
+        while ($row = mysqli_fetch_array($query)) {
+            $voto = $row['Votos'];
+        }
+        $query = mysqli_query($db,"UPDATE `$bd` SET `Votos` = '$voto' + 1 WHERE `Opcao` LIKE '$opcao3'");
+        setcookie('cookies', $_SERVER['REMOTE_ADDR'], time() + 86400);
+        echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0\">";
+    }
 
-else
-{
-echo "$pergunta";
-echo "<br><br>Voto confirmado!";
+    if ($R1 == 4) {
+        $query = mysqli_query($db,"SELECT * FROM `$bd` WHERE `Opcao` LIKE '$opcao4'");
+        while ($row = mysqli_fetch_array($query)) {
+            $voto = $row['Votos'];
+        }
+        $query = mysqli_query($db,"UPDATE `$bd` SET `Votos` = '$voto' + 1 WHERE `Opcao` LIKE '$opcao4'");
+        setcookie('cookies', $_SERVER['REMOTE_ADDR'], time() + 86400);
+        echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0\">";
+    }
+
+} else {
+    echo utf8_encode("$pergunta");
+    echo "<br><br>Voto confirmado!";
 }
 
 ?>
