@@ -1,6 +1,6 @@
 # survey Simple
 > Developed in PHP5, it is a basic survey to implement on your website.
-![](Captura.PNG)
+![](Capturar.PNG)
 
 ## Installation
 
